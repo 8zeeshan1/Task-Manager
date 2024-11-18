@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block title %}Amend{% endblock %}
+
+{% block body %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert" role = "alert">
+    {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+<div>
+    <h1>Previous Entries</h1>
+<table class = "display">
+    <thead>
+        <tr>
+        <th>Subject</th>
+        <th>Task</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td> {{ task[0].name }} </td>
+            <td> {{ task[0].task }} </td>
+            </tr>
+
+            </tbody>
+            </table>
+            </div>
+
+            <form action="{{ url_for('amendt') }}" method="POST">
+                <h1>Make Amendments:</h1>
+                <input type="hidden" name="id" value="{{ task[0].id }}">
+                <input type="text" name="subject" placeholder="Subject" value="{{ task[0].name }}">
+                <textarea name="atask" placeholder="Amend task" rows="4" cols="50">{{ task[0].task }}</textarea>
+                <input type="submit" value="Amend">
+            </form>
+
+
+{% endblock %}
