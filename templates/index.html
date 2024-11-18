@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+
+{% block title %}Task{% endblock %}
+
+{% block body %}
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert" role = "alert">
+    {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+<div class = "background_image">
+<div class="container">
+<h1 id="head"> Add Task </h1>
+<form action="/" method = "post">
+<input type = "text" name = "name" placeholder = "Subject" autocomplete="off">
+<textarea name="task" placeholder="Add task" rows="4" cols="50" autocomplete="off"></textarea>
+<input type="submit" value="Add">
+</form>
+</div>
+</div>
+
+<div>
+    <table class="display">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Subject</th>
+                <th>Task</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for task in tasks %}
+        <tr>
+            <td>{{ task.timestamp }}</td>
+            <td>{{ task.name }}</td>
+            <td>{{ task.task }}</td>
+            <td>
+                <form action="/amend" method="post">
+                    <button>Amend</button>
+                    <input type="hidden" name="id" value="{{ task.id }}">
+                </form>
+            </td>
+            <td>
+                <form action="/done" method="post">
+                    <button class="done-button">Done</button>
+                    <input type="hidden" name="id" value="{{ task.id }}">
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+{% endblock %}
+
